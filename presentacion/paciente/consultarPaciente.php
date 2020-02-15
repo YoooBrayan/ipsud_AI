@@ -38,7 +38,7 @@ include 'presentacion/menuAdministrador.php';
 								echo "<td id='cambiarEstados'>" . "<a href='modalPaciente.php?idPaciente=" . $p->getId() . "' data-toggle='modal' data-target='#modalPaciente' ><span class='fas fa-eye' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='Ver Detalles' ></span> </a>
                        <a class='fas fa-pencil-ruler' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarPaciente.php") . "&idPaciente=" . $p->getId() . "' data-toggle='tooltip' data-placement='left' title='Actualizar'> </a>
                        <a class='fas fa-camera' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarFotoPaciente.php") . "&idPaciente=" . $p->getId() . "' data-toggle='tooltip' data-placement='left' title='Actualizar Foto'> </a>
-                       <div style='color: #007bff;'  id='cambiarEstado" . $p->getId() . "' value='" . $p->getId() . "' class='fas fa-power-off actualizar' href='" . $p->getId() . "' data-toggle='tooltip' data-placement='left' class='tooltipLink' data-original-title='" . ($p->getEstado() == 1 ? "Inhabilitar" : "Habilitar") . "'> </div>
+                       <div style='color: #007bff;'  id='cambiarEstado" . $p->getId() . "' value='" . $p->getId() . "' class='fas fa-power-off actualizar'  data-toggle='tooltip' data-placement='left' data-original-title='" . ($p->getEstado() == 1 ? "Inhabilitar" : "Habilitar") . "'> </div>
               </td>";
 								echo "</tr>";
 							}
@@ -66,6 +66,7 @@ include 'presentacion/menuAdministrador.php';
 	});
 </script>
 
+
 <script type="text/javascript">
 	$("table").on("click", "#ids .actualizar", function(event) {
 		var elemento = $(this)[0].parentElement.parentElement;
@@ -84,47 +85,38 @@ include 'presentacion/menuAdministrador.php';
 			},
 			success: function(response) {
 
-				Swal.fire({
+				/*Swal.fire({
 					position: "top-end",
 					icon: "success",
 					title: "Estado Actualizado",
 					showConfirmButton: "false",
 					timer: "500"
-				});
+				});*/
 				let datos = JSON.parse(response);
 				$("#icon" + idS).removeClass();
 				$("#icon" + idS).addClass(datos['icon']);
 				$("#icon" + idS).attr('data-original-title', datos['tooltip']);
 				$("#cambiarEstado" + idS).attr('data-original-title', datos['tooltip2']);
+				$("#cambiarEstado" + idS).tooltip('hide');
+				$("#cambiarEstado" + idS).tooltip('show');
 			}
 		})
 	}
 </script>
 
-<!--
-<script type="text/javascript">
-<?php // foreach ($pacientes as $p) { 
+
+<!--<script type="text/javascript">
+<?php //  foreach ($pacientes as $p) { 
 ?>
 
-$(document).on('click', '#cambiarEstado<?php // echo $p -> getId(); 
-										?>', function(){
-	event.preventDefault();
+$(document).on('click', '#cambiarEstado<?php //  echo $p -> getId(); ?>', function(){
+	var id = <?php  echo $p -> getId(); ?>;
 
-	var elemento = $(this)[0].parentElement.parentElement;
-	var id = $(elemento).attr('id');
-	
 	<?php //  echo "var ruta = \"indexAjax.php?pid=" . base64_encode("presentacion/paciente/editarEstadoPacienteAjax.php") . " \";\n"; 
 	?>
 	
 	$.post(ruta, {id}, function(response){
-		//var e = "#estado" + id;
-		//$(e).html(response);
-
-		let datos = JSON.parse(response);
-		$("#icon" + id).removeClass();
-		$("#icon" + id).addClass(datos['icon']);
-		$("#icon" + id).attr('data-original-title', datos['tooltip']);
-
+	
 		Swal.fire({
 			position: "top-end",
 			icon: "success",
@@ -132,10 +124,16 @@ $(document).on('click', '#cambiarEstado<?php // echo $p -> getId();
 			showConfirmButton: "false",
 			timer: "1000"
 		});
+
+		let datos = JSON.parse(response);
+		$("#icon" + id).removeClass();
+		$("#icon" + id).addClass(datos['icon']);
+		$("#icon" + id).attr('data-original-title', datos['tooltip']);
+		$("#cambiarEstado" + id).attr('data-original-title', datos['tooltip2']);
 	})
 	
 })
-<?php // }
+<?php  // }
 ?>
 
-</script> -->
+</script>-->
