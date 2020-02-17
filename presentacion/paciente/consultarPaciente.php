@@ -110,7 +110,7 @@ include 'presentacion/menuAdministrador.php';
 ?>
 
 $(document).on('click', '#cambiarEstado<?php //  echo $p -> getId(); ?>', function(){
-	var id = <?php  echo $p -> getId(); ?>;
+	var id = <?php // echo $p -> getId(); ?>;
 
 	<?php //  echo "var ruta = \"indexAjax.php?pid=" . base64_encode("presentacion/paciente/editarEstadoPacienteAjax.php") . " \";\n"; 
 	?>
@@ -126,10 +126,12 @@ $(document).on('click', '#cambiarEstado<?php //  echo $p -> getId(); ?>', functi
 		});
 
 		let datos = JSON.parse(response);
-		$("#icon" + id).removeClass();
-		$("#icon" + id).addClass(datos['icon']);
-		$("#icon" + id).attr('data-original-title', datos['tooltip']);
-		$("#cambiarEstado" + id).attr('data-original-title', datos['tooltip2']);
+		$("#icon" + idS).removeClass();
+		$("#icon" + idS).addClass(datos['icon']);
+		$("#icon" + idS).attr('data-original-title', datos['tooltip']);
+		$("#cambiarEstado" + idS).attr('data-original-title', datos['tooltip2']);
+		$("#cambiarEstado" + idS).tooltip('hide');
+		$("#cambiarEstado" + idS).tooltip('show');
 	})
 	
 })
