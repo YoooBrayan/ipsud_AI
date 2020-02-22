@@ -15,7 +15,7 @@ include 'presentacion/menuAdministrador.php';
 					<input id="filtro" type="text" name="filtro" class="form-control" placeholder="Ingrese Nombre">
 				</div>
 
-				<div id='tabla'></div>
+				<div id='resultado'></div>
 
 				</div>
 				
@@ -46,7 +46,7 @@ include 'presentacion/menuAdministrador.php';
 		//event.preventDefault();
 		id = $(this).attr("value");
 		actEstado(id);
-	});
+	})
 
 
 	function actEstado(idS) {
@@ -73,7 +73,7 @@ include 'presentacion/menuAdministrador.php';
 				$("#cambiarEstado" + idS).tooltip('hide');
 				$("#cambiarEstado" + idS).tooltip('show');
 			}
-		});
+		})
 	}
 </script>
 
@@ -117,42 +117,17 @@ $(document).on('click', '#cambiarEstado<?php //  echo $p -> getId(); ?>', functi
 
 $("#filtro").keyup(function(e){
 	let nombre = $("#filtro").val();
-	$.ajax({
-    	url: "<?php echo "indexAjax.php?pid=" . base64_encode("presentacion/paciente/filtrarPaciente.php") ?>",
-        type: "POST",
-        data: {
-                nombre
-            },
-        success: function(response) {
-			
-			let datos = JSON.parse(response);
 
-			console.log(datos);
+	if(nombre!=""){
+		<?php echo "var ruta = \"indexAjax.php?pid=" . base64_encode("presentacion/paciente/filtrarPaciente.php")."\";";?>
+		$("#resultado").load(ruta, {"nombre": nombre})
+	}else{
+		
+	}
 
-			let tabla = '<table class="table table-striped table-hover"> <thead><tr><th scope="col">Id</th><th scope="col">Nombre</th><th scope="col">Apellido</th><th scope="col">Correo</th><th scope="col">Estado</th><th scope="col">Telefono</th><th scope="col">Direccion</th><th scope="col">Servicios</th></tr></thead><tbody id="ids">';
-
-			datos.forEach(fila => {
-				tabla += `<tr id='${fila.id}'>
-				<td>${fila.id}</td>
-				<td>${fila.nombre}</td>
-				<td>${fila.apellido}</td>
-				<td>${fila.correo}</td>
-				<td><span style='z-index: 1' id='icon${fila.id}' class='${fila.estado}' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='${fila.tooltip1}'></span></td>
-				<td>${fila.telefono}</td>
-				<td>${fila.direccion}</td>
-				<td><a href='modalPaciente.php?idPaciente=${fila.id}' data-toggle='modal' data-target='#modalPaciente' ><span class='fas fa-eye' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='Ver Detalles' ></span> </a>
-                       <a class='fas fa-pencil-ruler' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarPaciente.php") . "&idPaciente=${fila.id}' data-toggle='tooltip' data-placement='left' title='Actualizar'> </a>
-                       <a class='fas fa-camera' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarFotoPaciente.php") . "&idPaciente=${fila.id}' data-toggle='tooltip' data-placement='left' title='Actualizar Foto'> </a>
-                       <div style='color: #007bff;'  id='cambiarEstado${fila.id}' value='${fila.id}' class='fas fa-power-off actualizar'  data-toggle='tooltip' data-placement='left' data-original-title='${fila.tooltip2}'> </div></td>
-				 `
-			});
-
-			$("#tabla").html(tabla);
-        }
-        });
+    
 
 });
-
 
 </script>
 
