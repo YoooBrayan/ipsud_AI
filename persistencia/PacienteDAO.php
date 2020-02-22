@@ -74,6 +74,11 @@ class PacienteDAO {
                 from paciente
                 order by apellido";
     }
+
+    function consultarFiltro($filtro){
+        return "select idpaciente,nombre, apellido, correo, estado,telefono,direccion,foto 
+        from paciente where nombre like '%". $filtro ."%' limit 8";
+    }
 }
 
 ?>

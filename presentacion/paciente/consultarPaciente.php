@@ -11,41 +11,14 @@ include 'presentacion/menuAdministrador.php';
 			<div class="card">
 				<div class="card-header bg-primary text-white">Consultar Paciente</div>
 				<div class="card-body">
-					<table class="table table-striped table-hover">
-						<thead>
-							<tr>
-								<th scope="col">Id</th>
-								<th scope="col">Nombre</th>
-								<th scope="col">Apellido</th>
-								<th scope="col">Correo</th>
-								<th scope="col">Estado</th>
-								<th scope="col">Telefono</th>
-								<th scope="col">Direccion</th>
-								<th scope="col">Servicios</th>
-							</tr>
-						</thead>
-						<tbody id="ids">
-							<?php
-							foreach ($pacientes as $p) {
-								echo "<tr id=" . $p->getId() . ">";
-								echo "<td>" . $p->getId() . "</td>";
-								echo "<td>" . $p->getNombre() . "</td>";
-								echo "<td>" . $p->getApellido() . "</td>";
-								echo "<td>" . $p->getCorreo() . "</td>";
-								echo "<td id='estado" . $p->getId() . "'  value='" . $p->getEstado() . "' ><span id='icon" . $p->getId() 	. "' class='fas " . ($p->getEstado() == 0 ? "fa-times-circle" : "fa-check-circle") . "' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='" . ($p->getEstado() == 0 ? "Inhabilitado" : "Habilitado") . "' ></span>" . "</td>";
-								echo "<td>" . $p->getTelefono() . "</td>";
-								echo "<td>" . $p->getDireccion() . "</td>";
-								echo "<td id='cambiarEstados'>" . "<a href='modalPaciente.php?idPaciente=" . $p->getId() . "' data-toggle='modal' data-target='#modalPaciente' ><span class='fas fa-eye' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='Ver Detalles' ></span> </a>
-                       <a class='fas fa-pencil-ruler' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarPaciente.php") . "&idPaciente=" . $p->getId() . "' data-toggle='tooltip' data-placement='left' title='Actualizar'> </a>
-                       <a class='fas fa-camera' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarFotoPaciente.php") . "&idPaciente=" . $p->getId() . "' data-toggle='tooltip' data-placement='left' title='Actualizar Foto'> </a>
-                       <div style='color: #007bff;'  id='cambiarEstado" . $p->getId() . "' value='" . $p->getId() . "' class='fas fa-power-off actualizar'  data-toggle='tooltip' data-placement='left' data-original-title='" . ($p->getEstado() == 1 ? "Inhabilitar" : "Habilitar") . "'> </div>
-              </td>";
-								echo "</tr>";
-							}
-							echo "<tr><td colspan='9'>" . count($pacientes) . " registros encontrados</td></tr>" ?>
-						</tbody>
-					</table>
+				<div class="form-group">
+					<input id="filtro" type="text" name="filtro" class="form-control" placeholder="Ingrese Nombre">
 				</div>
+
+				<div id='tabla'></div>
+
+				</div>
+				
 			</div>
 		</div>
 	</div>
@@ -73,7 +46,7 @@ include 'presentacion/menuAdministrador.php';
 		//event.preventDefault();
 		id = $(this).attr("value");
 		actEstado(id);
-	})
+	});
 
 
 	function actEstado(idS) {
@@ -100,7 +73,7 @@ include 'presentacion/menuAdministrador.php';
 				$("#cambiarEstado" + idS).tooltip('hide');
 				$("#cambiarEstado" + idS).tooltip('show');
 			}
-		})
+		});
 	}
 </script>
 
@@ -139,3 +112,47 @@ $(document).on('click', '#cambiarEstado<?php //  echo $p -> getId(); ?>', functi
 ?>
 
 </script>-->
+
+<script>
+
+$("#filtro").keyup(function(e){
+	let nombre = $("#filtro").val();
+	$.ajax({
+    	url: "<?php echo "indexAjax.php?pid=" . base64_encode("presentacion/paciente/filtrarPaciente.php") ?>",
+        type: "POST",
+        data: {
+                nombre
+            },
+        success: function(response) {
+			
+			let datos = JSON.parse(response);
+
+			console.log(datos);
+
+			let tabla = '<table class="table table-striped table-hover"> <thead><tr><th scope="col">Id</th><th scope="col">Nombre</th><th scope="col">Apellido</th><th scope="col">Correo</th><th scope="col">Estado</th><th scope="col">Telefono</th><th scope="col">Direccion</th><th scope="col">Servicios</th></tr></thead><tbody id="ids">';
+
+			datos.forEach(fila => {
+				tabla += `<tr id='${fila.id}'>
+				<td>${fila.id}</td>
+				<td>${fila.nombre}</td>
+				<td>${fila.apellido}</td>
+				<td>${fila.correo}</td>
+				<td><span style='z-index: 1' id='icon${fila.id}' class='${fila.estado}' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='${fila.tooltip1}'></span></td>
+				<td>${fila.telefono}</td>
+				<td>${fila.direccion}</td>
+				<td><a href='modalPaciente.php?idPaciente=${fila.id}' data-toggle='modal' data-target='#modalPaciente' ><span class='fas fa-eye' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='Ver Detalles' ></span> </a>
+                       <a class='fas fa-pencil-ruler' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarPaciente.php") . "&idPaciente=${fila.id}' data-toggle='tooltip' data-placement='left' title='Actualizar'> </a>
+                       <a class='fas fa-camera' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarFotoPaciente.php") . "&idPaciente=${fila.id}' data-toggle='tooltip' data-placement='left' title='Actualizar Foto'> </a>
+                       <div style='color: #007bff;'  id='cambiarEstado${fila.id}' value='${fila.id}' class='fas fa-power-off actualizar'  data-toggle='tooltip' data-placement='left' data-original-title='${fila.tooltip2}'> </div></td>
+				 `
+			});
+
+			$("#tabla").html(tabla);
+        }
+        });
+
+});
+
+
+</script>
+

@@ -33,6 +33,10 @@ class Paciente extends Persona {
     function getFoto(){
         return $this -> foto;
     }
+
+    function setNombre($nombre){
+        $this -> nombre = $nombre;
+    }   
     
     function Paciente ($id="", $nombre="", $apellido="", $correo="", $clave="", $cedula="", $estado="",$telefono="", $direccion="",$foto=""){ 
         $this -> Persona($id, $nombre, $apellido, $correo, $clave);
@@ -117,4 +121,18 @@ class Paciente extends Persona {
     	$this -> conexion -> cerrar();
     	
     }
+
+    function consultarFiltro($filtro){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pacienteDAO -> consultarFiltro($filtro));
+        $resultados = array();
+        $i=0;
+        while(($registro = $this -> conexion -> extraer()) != null){
+            $resultados[$i] = new Paciente($registro[0], $registro[1], $registro[2], $registro[3], "", "", $registro[4],$registro[5],$registro[6],$registro[7]);
+            $i++;
+        }        
+        $this -> conexion -> cerrar();
+        return $resultados;
+    }
+    
 }

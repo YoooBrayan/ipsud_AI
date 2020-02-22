@@ -19,7 +19,7 @@ $paciente->consultar();
 		<tbody>
 			<tr><th width="20%">Nombre</th><td><?php echo $paciente -> getNombre(); ?></td></tr>		
 			<tr><th width="20%">Apellido</th><td><?php echo $paciente -> getApellido(); ?></td></tr>		
-			<tr><th width="20%">Foto</th><td><img src="/IPSUD/fotos/<?php echo $paciente -> getFoto(); ?>" /></td></tr>		
+			<tr><th width="20%">Foto</th><td heigth="300px"><img src="/IPSUD_Ajax/fotos/<?php echo $paciente -> getFoto(); ?>" /></td></tr>		
 		</tbody>
 	</table>
 </div>

@@ -125,6 +125,10 @@ INSERT INTO `paciente` (`idpaciente`, `nombre`, `apellido`, `correo`, `clave`, `
 (3, 'Homero', 'Simpson', '30@30.com', '34173cb38f07f89ddbebc2ac9128303f', '30', 0, NULL, NULL, 'homer.jpg'),
 (4, 'Clark', 'Kent', '40@40.com', 'd645920e395fedad7bbbed0eca3fe2e0', '40', 0, '123', '123', 'clark.jpg');
 
+
+
+
+
 --
 -- Índices para tablas volcadas
 --
