@@ -77,7 +77,7 @@ class PacienteDAO {
 
     function consultarFiltro($filtro){
         return "select idpaciente,nombre, apellido, correo, estado,telefono,direccion,foto 
-        from paciente where nombre like '%". $filtro ."%' limit 8";
+        from paciente where concat_ws(' ', nombre, apellido, idpaciente) like '%". $filtro ."%'";
     }
 }
 

@@ -30,7 +30,7 @@ if(isset($_POST['nombre'])){
             <td> " . $p -> getNombre() ." </td>
             <td> " . $p -> getApellido() ." </td>
             <td> " . $p -> getCorreo() ." </td>
-            <td><span id='icon" . $p -> getId() ."' class='fas " . ($p -> getEstado()==0?'fa-times-circle':'fa-check-circle') ." data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='" . ($p -> getEstado()==0?'Inhabilitado':'Habilitado') ."'></span></td>
+            <td><div id='icon" . $p -> getId() ."' class='fas " . ($p -> getEstado()==0?'fa-times-circle':'fa-check-circle') ." data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='" . ($p -> getEstado() == 0 ? "Inhabilitado" : "Habilitado") ."'></div></td>
             <td> " . $p -> getTelefono() ." </td>
             <td> " . $p -> getDireccion() ." </td>
             <td id='cambiarEstados'>" . "<a href='modalPaciente.php?idPaciente=" . $p->getId() . "' data-toggle='modal' data-target='#modalPaciente' ><span class='fas fa-eye' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='Ver Detalles' ></span> </a>
@@ -75,14 +75,7 @@ $(function () {
 				id: idS
 			},
 			success: function(response) {
-
-				/*Swal.fire({
-					position: "top-end",
-					icon: "success",
-					title: "Estado Actualizado",
-					showConfirmButton: "false",
-					timer: "500"
-				});*/
+                
 				let datos = JSON.parse(response);
 				$("#icon" + idS).removeClass();
 				$("#icon" + idS).addClass(datos['icon']);

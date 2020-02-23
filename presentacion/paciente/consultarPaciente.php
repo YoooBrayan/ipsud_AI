@@ -11,8 +11,9 @@ include 'presentacion/menuAdministrador.php';
 			<div class="card">
 				<div class="card-header bg-primary text-white">Consultar Paciente</div>
 				<div class="card-body">
-				<div class="form-group">
-					<input id="filtro" type="text" name="filtro" class="form-control" placeholder="Ingrese Nombre">
+				<div class="form-group d-flex">
+					<i class="fas fa-search" style="font-size: 1.3em; margin-top:9px; margin-right: 5px; color:#007bff;" data-toggle="tooltip" data-placement="left" title="Buscar"></i>
+					<input id="filtro" type="text" name="filtro" class="form-control" placeholder="Ingrese Nombre o identificacion">
 				</div>
 
 				<div id='resultado'></div>
@@ -119,10 +120,11 @@ $("#filtro").keyup(function(e){
 	let nombre = $("#filtro").val();
 
 	if(nombre!=""){
+		$("#resultado").show();
 		<?php echo "var ruta = \"indexAjax.php?pid=" . base64_encode("presentacion/paciente/filtrarPaciente.php")."\";";?>
 		$("#resultado").load(ruta, {"nombre": nombre})
 	}else{
-		
+		$("#resultado").hide();		
 	}
 
     
