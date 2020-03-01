@@ -3,6 +3,7 @@ session_start();
 require 'logica/Persona.php';
 require 'logica/Administrador.php';
 require 'logica/Paciente.php';
+require 'pdf/class.ezpdf.php';
 
 ?>
 <head>

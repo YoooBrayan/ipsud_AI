@@ -21,7 +21,7 @@ if($foto["size"] <= 1000000)
          
         //$tipoI = explode('/', $tipo); //separar cadena cuado encuentre un /. Metodo para obtener tipo de imagen
 
-        $destino = $_SERVER['DOCUMENT_ROOT'] . '/ipsud_Yo/fotos/';
+        $destino = $_SERVER['DOCUMENT_ROOT'] . '/ipsud_Ajax/fotos/';
         move_uploaded_file($foto['tmp_name'], $destino . date("jnYhis") . '.jpg');
          // Se envia al servidor con el nombre modificada en el idPaciente y el tipo de imagen
 

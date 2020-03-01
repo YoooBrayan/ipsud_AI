@@ -33,7 +33,8 @@ if(isset($_POST['nombre'])){
             <td><div id='icon" . $p -> getId() ."' class='fas " . ($p -> getEstado()==0?'fa-times-circle':'fa-check-circle') ." data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='" . ($p -> getEstado() == 0 ? "Inhabilitado" : "Habilitado") ."'></div></td>
             <td> " . $p -> getTelefono() ." </td>
             <td> " . $p -> getDireccion() ." </td>
-            <td id='cambiarEstados'>" . "<a href='modalPaciente.php?idPaciente=" . $p->getId() . "' data-toggle='modal' data-target='#modalPaciente' ><span class='fas fa-eye' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='Ver Detalles' ></span> </a>
+            <td id='cambiarEstados'>" . 
+                      "<a href='indexAjax.php?pid=" . base64_encode("presentacion/paciente/modalPaciente.php") . "&idPaciente=" . $p->getId() . "' data-toggle='modal' data-target='#modalPaciente' ><span class='fas fa-eye' data-toggle='tooltip' class='tooltipLink' data-placement='left' data-original-title='Ver Detalles' ></span> </a>
                        <a class='fas fa-pencil-ruler' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarPaciente.php") . "&idPaciente=" . $p->getId() . "' data-toggle='tooltip' data-placement='left' title='Actualizar'> </a>
                        <a class='fas fa-camera' href='index.php?pid=" . base64_encode("presentacion/paciente/actualizarFotoPaciente.php") . "&idPaciente=" . $p->getId() . "' data-toggle='tooltip' data-placement='left' title='Actualizar Foto'> </a>
                        <div style='color: #007bff;'  id='cambiarEstado" . $p->getId() . "' value='" . $p->getId() . "' class='fas fa-power-off actualizar'  data-toggle='tooltip' data-placement='left' data-original-title='" . ($p->getEstado() == 1 ? "Inhabilitar" : "Habilitar") . "'> </div>

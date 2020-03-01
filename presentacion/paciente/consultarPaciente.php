@@ -23,6 +23,7 @@ include 'presentacion/menuAdministrador.php';
 			</div>
 		</div>
 	</div>
+	<a href="index.php?pid= <?php echo base64_encode("presentacion/paciente/generarPacientesPDF.php") ?>" id="pdf" style="margin-top: 15px" type="button" class="btn btn-primary">Generar PDF</a>
 </div>
 
 
@@ -119,7 +120,7 @@ $(document).on('click', '#cambiarEstado<?php //  echo $p -> getId(); ?>', functi
 $("#filtro").keyup(function(e){
 	let nombre = $("#filtro").val();
 
-	if(nombre!=""){
+	if(nombre!="" && nombre!=" "){
 		$("#resultado").show();
 		<?php echo "var ruta = \"indexAjax.php?pid=" . base64_encode("presentacion/paciente/filtrarPaciente.php")."\";";?>
 		$("#resultado").load(ruta, {"nombre": nombre})

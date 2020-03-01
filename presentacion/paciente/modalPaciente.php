@@ -1,8 +1,6 @@
 <?php
-require_once 'logica/Persona.php';
-require_once 'logica/Paciente.php';
 
-$idPaciente = $_GET['idPaciente'];
+$idPaciente = $_GET['idPaciente'];	
 $paciente = new Paciente($idPaciente);
 $paciente->consultar();
 
@@ -19,7 +17,7 @@ $paciente->consultar();
 		<tbody>
 			<tr><th width="20%">Nombre</th><td><?php echo $paciente -> getNombre(); ?></td></tr>		
 			<tr><th width="20%">Apellido</th><td><?php echo $paciente -> getApellido(); ?></td></tr>		
-			<tr><th width="20%">Foto</th><td heigth="300px"><img src="/IPSUD_Ajax/fotos/<?php echo $paciente -> getFoto(); ?>" /></td></tr>		
+			<tr><th width="20%">Foto</th><td><img src="/IPSUD_Ajax/fotos/<?php echo $paciente -> getFoto(); ?>" height="150px;" /></td></tr>		
 		</tbody>
 	</table>
 </div>
