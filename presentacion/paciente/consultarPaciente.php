@@ -8,7 +8,7 @@ include 'presentacion/menuAdministrador.php';
 <div class="container">
 	<div class="row">
 		<div class="col-12">
-			<div class="card">
+			<div class="card mt-3">
 				<div class="card-header bg-primary text-white">Consultar Paciente</div>
 				<div class="card-body">
 				<div class="form-group d-flex">
@@ -23,7 +23,8 @@ include 'presentacion/menuAdministrador.php';
 			</div>
 		</div>
 	</div>
-	<a href="index.php?pid= <?php echo base64_encode("presentacion/paciente/generarPacientesPDF.php") ?>" id="pdf" style="margin-top: 15px" type="button" class="btn btn-primary">Generar PDF</a>
+	<a target="_blank" href="index.php?pid= <?php echo base64_encode("presentacion/paciente/generarPacientesPDF.php") ?>" id="pdf" style="margin-top: 15px" type="button" class="btn btn-primary">Generar PDF</a>
+	<a target="_blank" href="index.php?pid= <?php echo base64_encode("presentacion/paciente/citasPacientesPDF.php") ?>" id="pdf" style="margin-top: 15px" type="button" class="btn btn-primary">Citas PDF</a>
 </div>
 
 

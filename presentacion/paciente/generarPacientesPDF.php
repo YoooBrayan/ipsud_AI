@@ -1,16 +1,39 @@
 <?php
+
+$paciente = new Paciente();
+$pacientes = $paciente -> consultarTodos();
+
 $pdf = new Cezpdf();
 $pdf->selectFont('pdf/fonts/Helvetica.afm');
-$pdf->ezText('Hello World', 51);
+
+$options = array(
+    'aleft' => 170
+);
+
+$pdf->ezText("Lista de Pacientes\n", 30, $options);
 
 $pdf->selectFont('pdf/fonts/Helvetica.afm');
-$data = array( 
-    array('numero'=>1,'name'=>'gandalf','type'=>'wizard'),
-    array('numero'=>2,'name'=>'bilbo','type'=>'hobbit','url'=>'http://www.ros.co.nz/pdf/'),
-    array('numero'=>3,'name'=>'frodo','type'=>'hobbit'),
-    array('numero'=>4,'name'=>'saruman','type'=>'baddude','url'=>'http://sourceforge.net/projects/pdf-php'),
-    array('numero'=>5,'name'=>'sauron','type'=>'really bad dude'));
-    $pdf->ezTable($data);
+
+foreach($pacientes as $p){
+    $data[] = array(
+        'ID'=> $p -> getId(),
+        'Nombre'=> $p -> getNombre(),
+        'Apellido'=> $p -> getApellido(),
+        'Correo'=> $p -> getCorreo(),
+        'Estado'=> ($p -> getEstado()==0?'Inhabilitado':'Habilitado'),
+        'Telefono'=> $p -> getTelefono(),
+        'Direccion'=> $p -> getDireccion()
+        );
+}
+
+$pdf->ezTable($data);
+
+$pdf -> ezText("\n\nEl presente certificado se expide por solicitud del interesado a los " . date("j ")  ."dias del mes ". date("m") ." del " . date("Y"), 13, array('left' => 50));
 
 $pdf->ezStream();
 ?>
+
+
+<script>
+document.title = "PacientesPDF";
+</script>

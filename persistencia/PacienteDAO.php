@@ -72,7 +72,11 @@ class PacienteDAO {
     function consultarTodos(){
         return "select idpaciente,nombre, apellido, correo, estado,telefono,direccion,foto 
                 from paciente
-                order by apellido";
+                order by idPaciente";
+    }
+
+    function consultarPacientesCitas(){
+        return "select c.Paciente_idpaciente, concat_ws(' ', p.nombre, p.apellido) as paciente from cita c inner join paciente p on c.Paciente_idPaciente = p.idpaciente GROUP by paciente_idpaciente";
     }
 
     function consultarFiltro($filtro){

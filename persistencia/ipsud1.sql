@@ -134,7 +134,7 @@ insert into medico(nombre, apellido, correo, clave, tarjetaprofesional, especial
 insert into consultorio() VALUES (1, "c1"), (2, "c2"), (3, "c3");
 
 
-insert into cita(fecha, hora, medico_idmedico, paciente_idpaciente, consultorio_idconsultorio) values ("2020-03-02", "21:00:00", 1, 1, 1);
+insert into cita() values (1, "2020-03-02", "14:00:00", 1, 1, 1);
 
 insert into cita() values (2, "2020-03-03", "16:00:00", 2, 1, 2),
                           (3, "2020-03-03", "09:00:00", 1, 2, 3),

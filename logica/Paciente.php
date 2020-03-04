@@ -134,5 +134,18 @@ class Paciente extends Persona {
         $this -> conexion -> cerrar();
         return $resultados;
     }
+
+    function consultarPacientesCitas(){
+        $this -> conexion -> abrir();
+        $this -> conexion -> ejecutar($this -> pacienteDAO -> consultarPacientesCitas());
+        $resultados = array();
+        $i=0;
+        while(($registro = $this -> conexion -> extraer()) != null){
+            $resultados[$i] = new Paciente($registro[0], $registro[1]);
+            $i++;
+        }
+        $this -> conexion -> cerrar();
+        return $resultados;
+    }
     
 }
